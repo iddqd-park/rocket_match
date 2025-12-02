@@ -147,11 +147,20 @@ $(document).ready(function () {
                     text = getRandomWrongText(currentTarget);
                 } else {
                     emoji = getRandomEmoji();
-                    const useTargetText = Math.random() < 0.3;
-                    if (useTargetText) {
-                        text = targetDetailValue;
-                    } else {
+
+                    // CRITICAL FIX: If the random emoji happens to be the target emoji,
+                    // we MUST ensure the text is NOT the target text.
+                    // Otherwise we create a duplicate correct answer that is marked as wrong.
+                    if (emoji === targetOrderEmoji) {
                         text = getRandomWrongText(currentTarget);
+                    } else {
+                        // Emoji is different, so we can safely use target text or wrong text
+                        const useTargetText = Math.random() < 0.3;
+                        if (useTargetText) {
+                            text = targetDetailValue;
+                        } else {
+                            text = getRandomWrongText(currentTarget);
+                        }
                     }
                 }
             }
@@ -217,6 +226,7 @@ $(document).ready(function () {
         updateLevelDisplay();
         $('.levelup-title').text(`LEVEL ${level}`);
         maxTime = Math.max(5000, 20000 - (level * 1000));
+        currentTime = maxTime; // Reset time to full
 
         $levelupOverlay.removeClass('hidden');
 

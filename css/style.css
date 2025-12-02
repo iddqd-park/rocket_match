@@ -354,6 +354,19 @@ body {
     }
 }
 
+.iddqd-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-family: 'VT323', monospace;
+    transition: color 0.2s;
+}
+
+.iddqd-link:hover {
+    color: var(--hacker-green);
+    text-shadow: 0 0 5px var(--hacker-green);
+}
+
 /* Responsive adjustments */
 @media (max-height: 600px) {
     .cell-emoji {
